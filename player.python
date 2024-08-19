@@ -1,0 +1,31 @@
+import random
+
+def player(prev_play, opponent_history=None):
+    # Initialize opponent history if it's the first call
+    if opponent_history is None:
+        opponent_history = []
+    
+    # Update opponent history
+    if prev_play:
+        opponent_history.append(prev_play)
+    
+    # Define a counter strategy
+    def get_counter_move(move):
+        if move == 'R':
+            return 'P'  # Paper beats Rock
+        elif move == 'P':
+            return 'S'  # Scissors beats Paper
+        elif move == 'S':
+            return 'R'  # Rock beats Scissors
+        else:
+            return random.choice(['R', 'P', 'S'])  # In case of an unexpected input
+
+    # Decide the next move
+    if not opponent_history:
+        # If no history, choose a random move
+        return random.choice(['R', 'P', 'S'])
+    else:
+        # Get the last move from the opponent's history
+        last_move = opponent_history[-1]
+        # Return the counter move
+        return get_counter_move(last_move)
